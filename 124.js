@@ -1,22 +1,25 @@
 function joinOverlapping(words) {
-    let result = [];
+    let result = words[0];
+    let overlaps = [];
     for (let i = 0; i < words.length - 1; i++) {
-        result.push(findCommonLength(words[i], words[i + 1]));
+        let [rem, com] = findRemainder(words[i], words[i + 1]);
+        result += rem;
+        overlaps.push(com);
     }
-    result.sort((a, b) => a - b);
-    return result[0];
+    overlaps.sort((a, b) => a - b);
+    console.log([result,overlaps[0]]);
+    return [result,overlaps[0]];
 }
 
-function findCommonLength(word1, word2) {
+function findRemainder(word1, word2) {
     let commonLength = (word1.length > word2.length) ? word2.length : word1.length;
     for (let i = 0; i < commonLength; i++) {
-        if (word1.substring(word1.length - (commonLength - i)) === word2.substring(0, commonLength - i)) {
-            return [commonLength - i]
+        if (word2.startsWith(word1.substring(word1.length - (commonLength - i)))) {
+            return [word2.substring(commonLength - i, word2.length), commonLength - i]
         }
     }
-    return 0;
+    return [word2, 0];
 }
-
 console.log(joinOverlapping(["oven", "envier", "erase", "serious"]));// "ovenvieraserious"
 
 console.log(joinOverlapping(["move", "over", "very"]));// "movery"

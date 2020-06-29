@@ -41,7 +41,7 @@ function getRanges(list) {
 function getReplicas() {
     let balancer = new LoadBalancer(
         [
-            {replica: "replica1", load: 1},
+            { load: 1},
             {replica: "replica2", load: 1},
             {replica: "replica3", load: 2}
         ]

@@ -86,7 +86,7 @@ let tree3 = {
         }
     ]
 };
-console.log(whoIsTheGrandParent(tree3, 777));
+// console.log(whoIsTheGrandParent(tree3, 777));
 
 function whoIsTheGrandParent(tree, target) {
     let value = tree['value'];
@@ -138,29 +138,29 @@ let tree2 = {
         }]
 };
 
-console.log(whoIsTheGrandParent(tree2, 8));// should return 3
-console.log(whoIsTheGrandParent(tree2, 4));// should return 1
-console.log(whoIsTheGrandParent(tree2, 33));// should return 1
-console.log(whoIsTheGrandParent(tree2, 5));// should return 1
-console.log(whoIsTheGrandParent(tree2, 2)); // should return undefined
+// console.log(whoIsTheGrandParent(tree2, 8));// should return 3
+// console.log(whoIsTheGrandParent(tree2, 4));// should return 1
+// console.log(whoIsTheGrandParent(tree2, 33));// should return 1
+// console.log(whoIsTheGrandParent(tree2, 5));// should return 1
+// console.log(whoIsTheGrandParent(tree2, 2)); // should return undefined
 
 
 function whoIsTheParent(tree, target) {
-    let value = tree['value'];
+    let parentValue = tree['value'];
     let children = tree['children'];
-    for (let i = 0; i < children.length; i++) {
-        if (children[i]['value'] === target) {
-            return value
-        } else {
-            if (children[i]['children'].length !== 0)
-                if (whoIsTheParent(children[i], target) !== undefined) return whoIsTheParent(children[i], target)
+    for(let child of children){
+        if(child['value']===target){
+            return parentValue
+        }else {
+            if(child['children'].length!==0){
+                if(whoIsTheParent(child,target)!==undefined) return whoIsTheParent(child,target)
+            }
         }
     }
-
     return undefined;
 }
 
-// console.log(whoIsTheParent(tree2, 5));
-// console.log(whoIsTheParent(tree2, 4));
-// console.log(whoIsTheParent(tree2, 1));
-// console.log(whoIsTheParent(tree2, 8));
+console.log(whoIsTheParent(tree2, 5));
+console.log(whoIsTheParent(tree2, 4));
+console.log(whoIsTheParent(tree2, 1));
+console.log(whoIsTheParent(tree2, 8));
