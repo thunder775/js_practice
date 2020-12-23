@@ -3,7 +3,8 @@ function findWaterHeight(heights = [1], water = 10) {
     for (let i = heights.length; i > 1; i--) {
         let [last, secondLast] = [heights[i], heights[i - 1]];
         let currentAvailableHeight = secondLast - last;
-        if (water < currentWidth * currentAvailableHeight) {
+        let currentVol = currentWidth * currentAvailableHeight
+        if (water < currentVol) {
             return water;
         } else {
             water -= currentAvailableHeight - currentWidth;

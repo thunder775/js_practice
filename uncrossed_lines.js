@@ -1,37 +1,37 @@
-function uncrossedLines(upperPane = [], lowerPane = []) {
-    let connectionHistoryMap = new Map();
-    for (let u = 0; u < upperPane.length; u++) {
-        let upperValue = upperPane[u];
-        for (let l = 0; l < lowerPane.length; l++) {
-            let lowerValue = lowerPane[l];
-            if (upperValue === lowerValue) {
-                if (connectionHistoryMap.get(upperValue + `:${u}`) === undefined) {
-                    connectionHistoryMap.set(upperValue + `:${u}`, [l]);
-                } else {
-                    if (Math.abs(u - l) < Math.abs(u - connectionHistoryMap.get(upperValue + `:${u}`))) {
-                        connectionHistoryMap.set(upperValue + `:${u}`, [l])
-                    }
-                    if (Math.abs(u - l) === Math.abs(u - connectionHistoryMap.get(upperValue + `:${u}`))) {
-                        connectionHistoryMap.get(upperValue + `:${u}`).push(l)
-
-                    }
-                }
-            }
-        }
-    }
-    console.log(connectionHistoryMap);
-    let connectionArray = Array.from(connectionHistoryMap);
-    // console.log(connectionArray);
-    for (let i = 1; i < connectionArray.length; i++) {
-        let [nodeName1, dist1] = connectionArray[i - 1];
-        let [nodeName2, dist2] = connectionArray[i];
-        if (dist1[0] >= dist2[0]) {
-            connectionArray.splice(i - 1, 1)
-        }
-    }
-    console.log(connectionArray.length)
-    return connectionArray.length
-}
+// function uncrossedLines(upperPane = [], lowerPane = []) {
+//     let connectionHistoryMap = new Map();
+//     for (let u = 0; u < upperPane.length; u++) {
+//         let upperValue = upperPane[u];
+//         for (let l = 0; l < lowerPane.length; l++) {
+//             let lowerValue = lowerPane[l];
+//             if (upperValue === lowerValue) {
+//                 if (connectionHistoryMap.get(upperValue + `:${u}`) === undefined) {
+//                     connectionHistoryMap.set(upperValue + `:${u}`, [l]);
+//                 } else {
+//                     if (Math.abs(u - l) < Math.abs(u - connectionHistoryMap.get(upperValue + `:${u}`))) {
+//                         connectionHistoryMap.set(upperValue + `:${u}`, [l])
+//                     }
+//                     if (Math.abs(u - l) === Math.abs(u - connectionHistoryMap.get(upperValue + `:${u}`))) {
+//                         connectionHistoryMap.get(upperValue + `:${u}`).push(l)
+//
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     console.log(connectionHistoryMap);
+//     let connectionArray = Array.from(connectionHistoryMap);
+//     // console.log(connectionArray);
+//     for (let i = 1; i < connectionArray.length; i++) {
+//         let [nodeName1, dist1] = connectionArray[i - 1];
+//         let [nodeName2, dist2] = connectionArray[i];
+//         if (dist1[0] >= dist2[0]) {
+//             connectionArray.splice(i - 1, 1)
+//         }
+//     }
+//     console.log(connectionArray.length)
+//     return connectionArray.length
+// }
 
 
 // uncrossedLines(
@@ -64,18 +64,62 @@ function uncrossedLines2(upperPanel = [], lowerPanel = [], ptr1 = 0, ptr2 = 0) {
     else return 0;
 }
 
-console.log(uncrossedLines2(
+// console.log(uncrossedLines2(
+//     [3, 3, 3, 1],
+//     [2, 2, 3, 3]));
+// console.log(uncrossedLines2(
+//     [1],
+//     [0]));
+// console.log(uncrossedLines2(
+//     [1],
+//     [1]));
+// console.log(uncrossedLines2([1, 4, 2], [1, 2, 4]) === 2);
+// console.log(uncrossedLines2([2, 5, 1, 2, 5], [10, 5, 2, 1, 5, 2]) === 3);
+// console.log(uncrossedLines2([1, 2, 3, 4, 5, 6], [2, 3, 1, 4, 5, 6]) === 5);
+// console.log(uncrossedLines2([1, 3, 7, 1, 7, 5], [1, 9, 2, 5, 1]) === 2);
+// console.log(uncrossedLines2([2, 5, 1, 2, 5], [10, 5, 2, 1, 5, 2]) === 3);
+// console.log(uncrossedLines2([1, 1, 2, 1, 2], [1, 3, 2, 3, 1]) === 3);
+
+function uncrossedLines(arr1, arr2) {
+    let memo = new Map();
+    return LCS(arr1, arr2, arr1.length - 1, arr2.length - 1, memo)
+}
+
+function LCS(arr1, arr2, n, m, memo) {
+    let val = memo.get(`${n}:${m}`)
+    if (val !== undefined) {
+        return val;
+    }
+    if (n < 0 || m < 0) {
+        return 0;
+    }
+    if (arr1[n] === arr2[m]) {
+        let result = 1 + LCS(arr1, arr2, n - 1, m - 1, memo)
+        memo.set(`${n}:${m}`, result);
+        return result;
+    } else {
+        let temp1 = LCS(arr1, arr2, n - 1, m, memo);
+        let temp2 = LCS(arr1, arr2, n, m - 1, memo);
+        let result = Math.max(temp1, temp2);
+        memo.set(`${n}:${m}`, result);
+        return result;
+    }
+}
+
+
+console.log(uncrossedLines(
     [3, 3, 3, 1],
     [2, 2, 3, 3]));
-console.log(uncrossedLines2(
+console.log(uncrossedLines(
     [1],
     [0]));
-console.log(uncrossedLines2(
+console.log(uncrossedLines(
     [1],
     [1]));
-console.log(uncrossedLines2([1, 4, 2], [1, 2, 4]) === 2);
-console.log(uncrossedLines2([2, 5, 1, 2, 5], [10, 5, 2, 1, 5, 2]) === 3);
-console.log(uncrossedLines2([1, 2, 3, 4, 5, 6], [2, 3, 1, 4, 5, 6]) === 5);
-console.log(uncrossedLines2([1, 3, 7, 1, 7, 5], [1, 9, 2, 5, 1]) === 2);
-console.log(uncrossedLines2([2, 5, 1, 2, 5], [10, 5, 2, 1, 5, 2]) === 3);
-console.log(uncrossedLines2([1, 1, 2, 1, 2], [1, 3, 2, 3, 1]) === 3);
+console.log(uncrossedLines([1, 4, 2], [1, 2, 4]) === 2);
+console.log(uncrossedLines([2, 5, 1, 2, 5], [10, 5, 2, 1, 5, 2]) === 3);
+console.log(uncrossedLines([1, 2, 3, 4, 5, 6], [2, 3, 1, 4, 5, 6]) === 5);
+console.log(uncrossedLines([1, 3, 7, 1, 7, 5], [1, 9, 2, 5, 1]) === 2);
+console.log(uncrossedLines([2, 5, 1, 2, 5], [10, 5, 2, 1, 5, 2]) === 3);
+console.log(uncrossedLines([1, 1, 2, 1, 2], [1, 3, 2, 3, 1]) === 3);
+

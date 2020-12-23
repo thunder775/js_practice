@@ -1,20 +1,16 @@
-function getProductArray(inputArray = []) {
-    let leftProducts = [1];
-    let product = 1;
-    inputArray.forEach((value, index) => {
-        product *= value;
-        if (index !== inputArray.length - 1)
-            leftProducts.push(product)
-
-    });
-    let rightProducts = [1];
-    product = 1;
-    for (let i = inputArray.length - 1; i >= 0; i--) {
-        product *= inputArray[i];
-        if (i !== 0)
-            rightProducts.unshift(product)
+function productExceptSelf(inputArray = []) {
+    let resultArray = Array(inputArray.length);
+    let currentRightProduct = 1;
+    let currentLeftProduct = 1;
+    for (let i = 0; i < inputArray.length; i++) {
+        resultArray[i] = currentRightProduct;
+        currentRightProduct *= inputArray[i];
     }
-    return leftProducts.map((value, index) => value * rightProducts[index]);
+    for (let i = inputArray.length-1; i >=0; i--) {
+        resultArray[i] *= currentLeftProduct;
+        currentLeftProduct *= inputArray[i];
+    }
+    return resultArray
 }
 
-getProductArray([1, 2, 3, 4]);
+console.log(productExceptSelf([1, 2, 3, 4]));

@@ -1,23 +1,20 @@
 function exclusiveTimeFunction(total = 1, logs = ["1"]) {
-    let resultMap = new Map();
-    for (let i = 0; i < total; i++) {
-        resultMap.set(i, 0);
-    }
+    let resultList = Array(total).fill(0);
     let functionsStack = [];
-    let lastTimeStamp = undefined;
+    let lastTimeStamp = Number(logs[0].split(':')[2]);
     for (let i = 0; i < logs.length; i++) {
         let [id, state, time] = [Number(logs[i].split(':')[0]), logs[i].split(':')[1], Number(logs[i].split(':')[2])];
         let diff = time - lastTimeStamp;
         lastTimeStamp = time;
         if (functionsStack.length !== 0) {
             let currentFunction = functionsStack[functionsStack.length - 1];
-            let currentVal = resultMap.get(currentFunction);
+            let currentVal = resultList[currentFunction];
             currentVal += diff;
             if (state === "end") {
                 currentVal++;
                 // lastTimeStamp++;
             }
-            resultMap.set(currentFunction, currentVal);
+            resultList[currentFunction] = currentVal;
             if (state === "start") {
                 functionsStack.push(id)
             } else {
@@ -28,7 +25,7 @@ function exclusiveTimeFunction(total = 1, logs = ["1"]) {
             functionsStack.push(id)
         }
     }
-    return Array.from(resultMap.entries()).map(([key, val]) => val);
+    return resultList;
 }
 
 console.log(exclusiveTimeFunction(3,

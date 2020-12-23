@@ -24,11 +24,7 @@ function getAllPossiblePaths(paths = [[]], source, target) {
 }
 
 function navigate(roads, source, target) {
-    let edges = roads.graph.edges;
-    let edgesArray = [];
-    for (let edge of edges) {
-        edgesArray.push([edge.source, edge.target, edge.metadata.distance])
-    }
+    let edgesArray = roads.graph.edges.map(edge=>[edge.source, edge.target, edge.metadata.distance]);
     let possiblePaths = getAllPossiblePaths(edgesArray, source, target);
     let organisedPaths = [];
     for (let path of possiblePaths) {

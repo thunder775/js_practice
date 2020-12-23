@@ -1,28 +1,28 @@
 function taskScheduler(tasks = [], n = 1) {
-    let charMap = {};
+    let taskMap = {};
     tasks.forEach((task) => {
-        if (charMap[task] !== undefined) {
-            charMap[task] += 1
+        if (taskMap[task] !== undefined) {
+            taskMap[task] += 1
         } else {
-            charMap[task] = 1;
+            taskMap[task] = 1;
         }
 
     });
-    let charList = [];
-    for (let task in charMap) {
-        charList.push([task, charMap[task]])
+    let taskList = [];
+    for (let task in taskMap) {
+        taskList.push([task, taskMap[task]])
     }
-    charList.sort((a, b) => b[1] - a[1]);
-    let maxFrequency = charList[0][1];
+    taskList.sort((a, b) => b[1] - a[1]);
+    let maxFrequency = taskList[0][1];
     let idleSlots = (maxFrequency - 1) * n;
-    for (let i = 1; i < charList.length; i++) {
-        if (charList[i][1] === maxFrequency) {
+    for (let i = 1; i < taskList.length; i++) {
+        if (taskList[i][1] === maxFrequency) {
             idleSlots -= maxFrequency - 1
         } else {
-            idleSlots -= charList[i][1]
+            idleSlots -= taskList[i][1]
         }
     }
-    console.log(charList);
+    console.log(taskList);
     return idleSlots <= 0 ? tasks.length : tasks.length + idleSlots;
 }
 

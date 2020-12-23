@@ -17,19 +17,19 @@ function getValidIp(ipString, currentList) {
     let result = [];
 
     for (let i = 1; i < 4; i++) {
-        let temp = currentList.slice();
+        let currentSublist = currentList.slice();
         let currentNumber = Number(ipString.substring(0, i));
         if (ipString.substring(0, i).length > 1 && ipString.charAt(0) === '0') {
             continue
         }
         if (currentNumber <= 255) {
-            temp.push(currentNumber);
+            currentSublist.push(currentNumber);
         } else {
             continue;
         }
-        let temp2 = getValidIp(ipString.substring(i), temp);
-        if (temp2 !== undefined) {
-            result.push(...temp2);
+        let toAddList = getValidIp(ipString.substring(i), currentSublist);
+        if (toAddList !== undefined) {
+            result.push(...toAddList);
         }
     }
     return result.length === 0 ? undefined : result;
@@ -41,8 +41,6 @@ function restoreIpAddresses(ip) {
     let temp = [];
     for (let i = 0; i < result.length; i++) {
         temp.push(result[i]);
-
-
         if (temp.length === 4) {
             let tempString = '';
             for (let j = 0; j < temp.length; j++) {

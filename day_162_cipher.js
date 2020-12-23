@@ -38,5 +38,5 @@ function cipher(msg = '', keyword = '') {
     return toReturn
 }
 
-cipher("Meet me by the lake at midnight. Bring shovel.", "python");
-console.log(cipher("Mission Delta Kilo Sierra has been compromised. Kill Steve. Evacuate", "cake") === "ioliiabcrsiteuxmieksrsnpiksecesdaoraemmdlvatxsntleheooelevax");
+// cipher("Meet me by the lake at midnight. Bring shovel.", "python");
+// console.log(cipher("Mission Delta Kilo Sierra has been compromised. Kill Steve. Evacuate", "cake") === "ioliiabcrsiteuxmieksrsnpiksecesdaoraemmdlvatxsntleheooelevax");

@@ -21,7 +21,7 @@ function removePlayer(moves) {
 
     let minScore = Math.min(...scores.map((score) => score[2]));
     scores = scores.filter((score) => score[2] === minScore);
-    if (scores.length !== 1) {
+    if (scores.length !== 1) {l
         scores.sort((a, b) => a[1] - b[1]);
         if (scores[0][1] === scores[1][1]) {
             return null;
@@ -36,7 +36,7 @@ function removePlayer(moves) {
 
 // console.log(removePlayer([[4, 3], [3, 10], [3, 4], [1, 6]]));
 console.log(diceGame([[6, 2], [4, 3], [3, 4], [5, 4], [3, 5], [1, 5], [4, 3], [1, 5], [1, 5], [1, 5], [1, 5], [1, 5], [1, 5], [1, 5], [1, 5], [5, 6], [2, 2]]));
-console.log(diceGame([[6, 2], [4, 3], [3, 4], [5, 4], [1, 5], [1, 5], [4, 3], [3, 6], [1, 2], [3, 6], [1, 5], [1, 5], [1, 6], [1, 6], [1, 6], [1, 6], [1, 6], [1, 6], [1, 6], [3, 6]]));
+// console.log(diceGame([[6, 2], [4, 3], [3, 4], [5, 4], [1, 5], [1, 5], [4, 3], [3, 6], [1, 2], [3, 6], [1, 5], [1, 5], [1, 6], [1, 6], [1, 6], [1, 6], [1, 6], [1, 6], [1, 6], [3, 6]]));
 
 // console.log(diceGame([[5, 5], [4, 4], [3, 3], [2, 3], [1, 1], [1, 1], [1, 1], [5, 5], [4, 4], [3, 3]]));
 

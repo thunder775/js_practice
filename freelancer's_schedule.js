@@ -6,8 +6,8 @@ class BookingCalendar {
     }
 
     book(time1 = '10:10', time2 = '11:20') {
-        let mins1 = time1.split(':').map((val, index) => index === 0 ? (Number(val) * 60) : Number(val)).reduce((a, b) => a + b)
-        let mins2 = time2.split(':').map((val, index) => index === 0 ? (Number(val) * 60) : Number(val)).reduce((a, b) => a + b)
+        let mins1 = this.getMins(time1)
+        let mins2 = this.getMins(time2)
         for (let [start, end] of this.booking) {
             if ((mins1 < end && mins1 > start) || (mins2 > start && mins2 < end)) {
                 return false;
@@ -16,6 +16,10 @@ class BookingCalendar {
         this.booking.push([mins1, mins2])
         this.workingMins += (mins2 - mins1);
         return true;
+    }
+
+    getMins(time) {
+        return time.split(':').map((val, index) => index === 0 ? (Number(val) * 60) : Number(val)).reduce((a, b) => a + b);
     }
 
     earnings() {

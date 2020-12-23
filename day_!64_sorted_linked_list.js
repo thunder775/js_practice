@@ -56,10 +56,10 @@ class SortedLinkedList {
         if (ptr === undefined) {
             return false;
         }
-        while (ptr !== undefined && ptr.next.value !== value) {
+        while (ptr !== undefined && ptr.next && ptr.next.value !== value) {
             ptr = ptr.next;
         }
-        if (ptr === undefined) {
+        if (ptr.next === undefined) {
             return false;
         } else {
             ptr.next = ptr.next.next;
@@ -74,24 +74,28 @@ class SortedLinkedList {
         while (iterator !== undefined) {
             resultString += iterator.value + ', ';
             iterator = iterator.next
+            if (iterator === undefined) {
+                resultString = resultString.substring(0, resultString.length - 2)
+            }
         }
         resultString += ']';
         return resultString;
     }
 }
 
-let scores = new SortedLinkedList((a, b) =>a-b);
+let scores = new SortedLinkedList((a, b) => b - a); // passing comparator function here
 scores.add(54);
 scores.add(33);
 scores.add(91);
 scores.add(44);
-scores.add(63);
+scores.add(11);
+scores.add(14);
+scores.add(12);
 
-console.log(scores.head);
-console.log(`${scores}`); // Should print [33, 44, 54, 91];
-//
-console.log(scores.remove(44)); // Should print true
-console.log(`${scores}`);
+console.log(`${scores}`);// should print [91, 54, 44, 33, 14, 12, 12, 11]
+
+
+
 let students = new SortedLinkedList((a, b) => a.charCodeAt(0) - b.charCodeAt(0));
 students.add('Raj');
 students.add('Mark');

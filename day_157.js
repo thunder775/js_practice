@@ -1,24 +1,11 @@
-function corporateFlights(flights = [], bookings = [[]]) {
-    let resultMap = new Map();
-    for (let i = 0; i < bookings.length; i++) {
-        let [src, tgt, load] = bookings[i];
-        for (let j = src; j <= tgt; j++) {
-            let temp = resultMap.get(j);
-            if (temp === undefined) {
-                temp = load
-            } else {
-                temp += load
-            }
-            resultMap.set(j, temp)
+function corporateFlights(flights = [], booking = [[]]) {
+    let seatsArray = Array(flights.length).fill(0);
+    booking.forEach(([i, j, k]) => {
+        for (let x = i; x <= j; x++) {
+            seatsArray[x] += k;
         }
-    }
-    let resultArray = Array.from(resultMap.entries()).sort((a,b)=>a[0]-b[0]).map(([index, load]) => [flights[index], load]);
-    if (resultArray.length < flights.length) {
-        for (let j = resultArray.length; j < flights.length; j++) {
-            resultArray.push([flights[j], 0])
-        }
-    }
-    return resultArray;
+    })
+    return seatsArray.map((val, index) => [flights[index], val]);
 }
 
 console.log(corporateFlights(['A', 'B', 'C', 'D', 'E', 'F', 'G'], [[0, 1, 10], [1, 2, 20], [1, 4, 25], [5, 6, 25]]));
